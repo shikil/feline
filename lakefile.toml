@@ -1,6 +1,10 @@
 name = "feline"
 version = "0.1.0"
 defaultTargets = ["feline"]
+moreLinkArgs = [
+  "-L./.lake/packages/LeanCopilot/.lake/build/lib",
+  "-lctranslate2",
+]
 
 [[lean_lib]]
 name = "Feline"
@@ -8,6 +12,11 @@ name = "Feline"
 [[lean_exe]]
 name = "feline"
 root = "Main"
+
+[[require]]
+name = "LeanCopilot"
+git = "https://github.com/lean-dojo/LeanCopilot.git"
+rev = "v4.28.0"
 
 [[require]]
 name = "mathlib"
