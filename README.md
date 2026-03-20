@@ -1,3 +1,3 @@
 # feline
 
-## Functional Programming in Lean example
+## Example of Functional Programming in Lean

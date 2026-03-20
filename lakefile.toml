@@ -8,3 +8,8 @@ name = "Feline"
 [[lean_exe]]
 name = "feline"
 root = "Main"
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.28.0"
