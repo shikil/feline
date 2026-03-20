@@ -13,13 +13,13 @@ partial def dump (stream : IO.FS.Stream) : IO Unit := do
 
 def fileStream (filename : System.FilePath) : IO (Option IO.FS.Stream) := do
   let fileExists ← filename.pathExists
-  if not fileExists then
+  if fileExists then
+    let handle ← IO.FS.Handle.mk filename IO.FS.Mode.read
+    pure (some (IO.FS.Stream.ofHandle handle))
+  else
     let stderr ← IO.getStderr
     stderr.putStrLn s!"File not found: {filename}"
     pure none
-  else
-    let handle ← IO.FS.Handle.mk filename IO.FS.Mode.read
-    pure (some (IO.FS.Stream.ofHandle handle))
 
 def process (exitCode : UInt32) (args : List String) : IO UInt32 := do
   match args with
