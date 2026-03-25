@@ -9,6 +9,34 @@ def Pos.plus : Pos → Pos → Pos
 instance : Add Pos where
   add := Pos.plus
 
+def addNatPos : Nat → Pos → Pos
+  | 0, p => p
+  | n + 1, p => Pos.succ (addNatPos n p)
+
+def addPosNat : Pos → Nat → Pos
+  | p, 0 => p
+  | p, n + 1 => Pos.succ (addPosNat p n)
+
+instance : HAdd Nat Pos Pos where
+  hAdd := addNatPos
+
+instance : HAdd Pos Nat Pos where
+  hAdd := addPosNat
+
+def hashPos : Pos → UInt64
+  | Pos.one => 0
+  | Pos.succ n => mixHash 1 (hashPos n)
+
+instance : Hashable Pos where
+  hash := hashPos
+
+instance : OfNat Pos (n + 1) where
+  ofNat :=
+    let rec natPlusOne : Nat → Pos
+      | 0 => Pos.one
+      | k + 1 => Pos.succ (natPlusOne k)
+    natPlusOne n
+
 def Pos.toNat : Pos → Nat
   | Pos.one => 1
   | Pos.succ n => n.toNat + 1
@@ -31,3 +59,5 @@ instance : Mul Pos where
 
 def seven : Pos := Pos.succ (Pos.succ (Pos.succ (Pos.succ (Pos.succ (Pos.succ Pos.one)))))
 #eval s!"There are {seven}"
+#eval (3 : Pos) + (5 : Nat)
+#eval hash (3 : Pos)
