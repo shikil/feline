@@ -3,7 +3,3 @@
 import Feline.Basic
 import Feline.Pos
 
-import LeanCopilot  
-
-example (a b c : Nat) : a + b + c = a + c + b := by
-  suggest_tactics
